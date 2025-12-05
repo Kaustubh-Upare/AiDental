@@ -92,7 +92,7 @@ const UserLayout = (props: Props) => {
           </div>
 
           {/* Main Content */}
-          <div className='flex-1 p-3 overflow-auto'>
+          <div className='flex-1 p-3 overflow-auto scrollbar-thin scrollbar-thumb-rounded scrollbar-dark bg-[#0d0d0d]'>
               <Outlet />
           </div>
       </div>
