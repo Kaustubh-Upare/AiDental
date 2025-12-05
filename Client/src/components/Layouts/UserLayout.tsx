@@ -78,7 +78,7 @@ const UserLayout = (props: Props) => {
       }
       
       {/* Right Side of SideBar */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col h-full">
           {/* Header */}
           <div className='h-10  border-b-1 border-[#292828] flex items-center px-2'>
               <div onClick={handleSidebar}>

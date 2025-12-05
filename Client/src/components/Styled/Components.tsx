@@ -13,6 +13,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 
 type selectProps={
  placeholder:string,
@@ -150,5 +155,14 @@ export const PaginatedTable=()=>{
           </div>
       </div>
     </div>
+  )
+}
+
+export function AvatarCompo(fallbackImage:string,imageUrl:string) {
+  return (
+      <Avatar>
+        <AvatarImage src={imageUrl} alt="@shadcn" />
+        <AvatarFallback>{fallbackImage}</AvatarFallback>
+      </Avatar>
   )
 }
