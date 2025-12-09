@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sync"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 	// Connect to Vosk gRPC server
-	conn, err := grpc.Dial("localhost:8085",
+	conn, err := grpc.Dial("localhost:5001",
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
@@ -22,11 +23,13 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewSttServiceClient(conn)
+	// fmt.Println("Aisa hi ", client)
 	stream, err := client.StreamingRecognize(context.Background())
 	if err != nil {
 		log.Fatalf("open stream: %v", err)
 	}
-
+	var wg sync.WaitGroup
+	wg.Add(1)
 	// Send config first
 	config := &pb.StreamingRecognitionRequest{
 		StreamingRequest: &pb.StreamingRecognitionRequest_Config{
@@ -35,7 +38,7 @@ func main() {
 					AudioEncoding:   pb.RecognitionSpec_LINEAR16_PCM,
 					SampleRateHertz: 16000,
 					PartialResults:  true,
-					Model:           "en-us",
+					Model:           "en-in",
 				},
 			},
 		},
@@ -46,7 +49,7 @@ func main() {
 	}
 
 	// Read WAV file
-	file, err := os.Open("audio/sample.wav")
+	file, err := os.Open("output_16k_mono.wav")
 	if err != nil {
 		log.Fatalf("open file: %v", err)
 	}
@@ -60,7 +63,9 @@ func main() {
 	buffer := make([]byte, chunkSize)
 
 	go func() {
+		defer wg.Done()
 		for {
+			fmt.Println("Inside Jaan")
 			n, err := file.Read(buffer)
 			if err == io.EOF {
 				stream.CloseSend()
@@ -86,6 +91,7 @@ func main() {
 	}()
 
 	// Receive and print results
+	var t string
 	for {
 		resp, err := stream.Recv()
 		if err == io.EOF {
@@ -99,6 +105,7 @@ func main() {
 			if len(chunk.Alternatives) > 0 {
 				text := chunk.Alternatives[0].Text
 				if chunk.Final {
+					t = t + text
 					fmt.Printf("FINAL: %s\n", text)
 				} else {
 					fmt.Printf("Partial: %s\n", text)
@@ -106,4 +113,6 @@ func main() {
 			}
 		}
 	}
+	wg.Wait()
+	fmt.Println("bkl Final", t)
 }
