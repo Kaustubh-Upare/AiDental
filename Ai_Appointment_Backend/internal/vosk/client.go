@@ -133,4 +133,20 @@ func (p *VoskPool) StartStream(ctx context.Context) (*StreamSession, error) {
 			}
 		}
 	}()
+
+	return &StreamSession{
+		AudioCh:       audioCh,
+		TranscriptsCh: transcriptsCh,
+		cancel:        cancel,
+	}, nil
+}
+
+// EndStream closes a session (close audioCh then wait a bit for final transcripts).
+func (p *VoskPool) EndStream(s *StreamSession) {
+	// close audio channel to signal end-of-audio
+	close(s.AudioCh)
+	// small grace so final results arrive; in prod, use more robust sync
+	time.AfterFunc(300*time.Millisecond, func() {
+		s.cancel()
+	})
 }
