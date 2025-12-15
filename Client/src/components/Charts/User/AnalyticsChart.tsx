@@ -37,7 +37,7 @@ const AnalyticsChart = forwardRef<HTMLDivElement, Props>(function AnalyticsChart
     const options: DeepPartial<TimeChartOptions> = {
       autoSize: true,
       layout: {
-        background: { type: ColorType.Solid, color: "#171717" },
+        background: { type: ColorType.Solid, color: "#0D0D0D" },
         textColor: "#e5e7eb",
       },
       grid: {

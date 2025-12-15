@@ -7,6 +7,7 @@ import Analytics from './components/Page/Analytics'
 import Conversations from './components/Page/Conversations'
 import ChatDetailView from './components/Page/ChatDetailView'
 import PatientLayout from './components/Layouts/PatientLayout'
+import TaskView from './components/Page/TaskView'
 
 // import Analyticsu from 
 
@@ -23,7 +24,7 @@ function App() {
             <Route path='Conversations' element={<Conversations />} >
               <Route path=':conversationId' element={<ChatDetailView />} />
             </Route>
-            
+            <Route path='tasks' element={<TaskView/>} />
           </Route>
 
           <Route path='/u' element={<PatientLayout />}>

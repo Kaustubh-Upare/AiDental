@@ -33,7 +33,7 @@ const Analyticsu = (props: Props) => {
       </div>
 
        <div className="w-full mt-2">
-        <div className="border-1 border-[#2e2d2d] p-4 bg-[#171717] rounded-md  " >
+        <div className="border-1 p-3 border-[#2e2d2d]  bg-[#0D0D0D] rounded-md  " >
             <AnalyticsChart ref={chartDivRef} className="h-[320px] w-full" />
         </div>
         
