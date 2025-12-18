@@ -1,0 +1,13 @@
+<div className='flex flex-col h-full border-2 '> {/* Add wrapper */}
+      <div className="border-1 border-[#575757] bg-[#171717] p-1.5 w-full rounded-md">
+        <h2 className="text-gray-200 text-sm pl-2">User123</h2>
+      </div>
+
+      <div className='flex-1 border-2 border-amber-300 overflow-y-auto'> {/* Messages area */}
+        <p>Chat messages go here</p>
+        {new Array(50).fill(0).map((c)=><p>c</p>)}
+      </div>
+      <div>
+        Fixed
+      </div>
+    </div>

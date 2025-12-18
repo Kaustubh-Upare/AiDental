@@ -24,7 +24,7 @@ const PatientLayout = (props: Props) => {
         {name:"Tasks",Icon:<ListTodoIcon size={19} />},
         {name:"Ask Ai",Icon:<BotIcon size={19} />},
         {name:"Analytics",Icon:<ActivityIcon size={19} />},
-        // {name:"Conveersations",Icon:<MessageSquareIcon size={19} />},
+        {name:"Conveersations",Icon:<MessageSquareIcon size={19} />},
     ]
   return (
     <div className="h-screen w-screen flex">

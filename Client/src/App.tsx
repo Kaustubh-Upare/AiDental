@@ -9,10 +9,12 @@ import ChatDetailView from './components/Page/ChatDetailView'
 import PatientLayout from './components/Layouts/PatientLayout'
 import TaskView from './components/Page/TaskView'
 import NewTask from './components/Specific/Doc/NewTask'
+import UserChatDetail from './components/Page/UserPages/UserChatDetail'
 
 // import Analyticsu from 
 
 const UserAnalyics=lazy(()=>import('./components/Page/UserPages/Analytics'))
+const UserConversation=lazy(()=>import('./components/Page/UserPages/Conversations'))
 function App() {
   
   return (
@@ -31,7 +33,9 @@ function App() {
 
           <Route path='/u' element={<PatientLayout />}>
               <Route path='analytics' element={<UserAnalyics />} />
-              
+              <Route path='Conversations' element={<UserConversation />} >
+                  <Route path=':uconId' element={<UserChatDetail/>} />
+              </Route>
           </Route>
 
         </Routes>
