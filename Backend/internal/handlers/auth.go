@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/Kaustubh-Upare/Prime-Backend/internal/services"
+	"github.com/Kaustubh-Upare/Prime-Backend/internal/utils"
 )
 
 type AuthHandler struct {
@@ -28,9 +29,14 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := h.service.Register(req.Email, req.Password)
 	if err != nil {
-		// Error Return
+		utils.JSONError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	token, err := utils.GenerateJWT(user.ID)
+
+	utils.JSON_Proto(w, http.StatusCreated, map[string]string{
+		"token": token,
+	})
 	// Generate JWt
 	// Return Status Accepted
 }
@@ -44,9 +50,14 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	user, err := h.service.Login(req.Email, req.Password)
 	if err != nil {
 		// Error Return
+		utils.JSONError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	token, _ := utils.GenerateJWT(user.ID)
 	// Generate JWt
+	utils.JSON_Proto(w, http.StatusOK, map[string]string{
+		"token": token,
+	})
 	// Return Status Accepted
 }
 
@@ -55,4 +66,7 @@ func (h *AuthHandler) Logout(w http.ResponseWriter, r *http.Request) {
 	// utils.JSON(w, http.StatusOK, map[string]string{
 	// 	"message": "logged out",
 	// })
+	utils.JSON_Proto(w, http.StatusOK, map[string]string{
+		"Message": "Logged Out",
+	})
 }
