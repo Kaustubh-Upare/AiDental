@@ -32,7 +32,9 @@ func GetContext(key string) ([]LLmMessage, error) {
 }
 
 func SaveContext(key string, msgs []LLmMessage) error {
+
 	// cajust for now we add len we will do this on the basis of size
+
 	if len(msgs) > maxMsg {
 		// We will Do something or summarize the thing
 	}
